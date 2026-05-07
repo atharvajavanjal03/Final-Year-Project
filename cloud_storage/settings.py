@@ -27,6 +27,10 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['cloud-storage-app.onrender.com']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://cloud-storage-app.onrender.com'
+]
+
 
 # Application definition
 
