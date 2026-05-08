@@ -11,7 +11,7 @@ SECRET_KEY = 'django-insecure-$8b93l7o^gno&g2j!vq=2-y^rwsj@@1@)k$#5gq9pyk-z83ghz
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['private-cloud-bya6.onrender.com']
+ALLOWED_HOSTS = ['*']
 
 
 CSRF_TRUSTED_ORIGINS = [
@@ -73,14 +73,15 @@ LOGOUT_REDIRECT_URL = '/login/'
 
 
 # CLOUDINARY CONFIG (CORRECT)
-cloudinary.config(
-    cloud_name='dkaf0elaq',
-    api_key='269742388844269',
-    api_secret='fj_FuZLe1J_kbegGAAL17DqjdNk'
-)
+import os
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 
 # DATABASE
 DATABASES = {

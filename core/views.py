@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from .models import File
 
 
@@ -35,12 +36,22 @@ def logout_view(request):
 
 @login_required
 def dashboard(request):
-    if request.method == 'POST' and request.FILES.get('file'):
-        uploaded_file = request.FILES['file']
+    if request.method == 'POST':
+        uploaded_file = request.FILES.get('file')
 
-        new_file = File(user=request.user)
-        new_file.file = uploaded_file   # ✅ correct for Cloudinary
-        new_file.save()                 # ✅ required step
+        if not uploaded_file:
+            return HttpResponse("No file selected")
+
+        # Optional: file size limit (50MB)
+        if uploaded_file.size > 50 * 1024 * 1024:
+            return HttpResponse("File too large (max 50MB)")
+
+        try:
+            obj = File(user=request.user)
+            obj.file = uploaded_file   # correct for CloudinaryField
+            obj.save()
+        except Exception as e:
+            return HttpResponse(str(e))
 
         return redirect('dashboard')
 
@@ -50,6 +61,6 @@ def dashboard(request):
 
 @login_required
 def delete_file(request, id):
-    file = File.objects.get(id=id)
+    file = get_object_or_404(File, id=id, user=request.user)
     file.delete()
     return redirect('dashboard')
