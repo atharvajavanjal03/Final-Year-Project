@@ -1,29 +1,113 @@
-<h2>Upload File</h2>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f9;
+    }
 
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  <input type="file" name="file" required>
-  <button type="submit">Upload</button>
-</form>
+    .header {
+      background: #667eea;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-<hr>
+    .container {
+      padding: 20px;
+    }
 
-<h3>Your Files</h3>
+    .upload-box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
 
-<ul>
-{% for file in files %}
-  <li>
-    {{ file.file }}
+    input[type="file"] {
+      margin: 10px 0;
+    }
 
-    <!-- Correct RAW URL -->
-    <a href="{{ file.file.url }}" target="_blank">View</a>
+    button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      background: #667eea;
+      color: white;
+      cursor: pointer;
+    }
 
-    <a href="{{ file.file.url }}?fl_attachment" target="_blank">Download</a>
+    .files {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+    }
 
-    <a href="/delete/{{ file.id }}/">Delete</a>
-  </li>
-{% endfor %}
-</ul>
+    .file-card {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
 
-<br>
-<a href="/logout/">Logout</a>
+    .file-card p {
+      font-size: 14px;
+      word-break: break-all;
+    }
+
+    .actions a {
+      margin-right: 10px;
+      font-size: 13px;
+      text-decoration: none;
+      color: #667eea;
+    }
+
+    .logout {
+      color: white;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h2>Cloud Storage</h2>
+  <a class="logout" href="/logout/">Logout</a>
+</div>
+
+<div class="container">
+
+  <div class="upload-box">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="file" name="file" required>
+      <button type="submit">Upload</button>
+    </form>
+  </div>
+
+  <div class="files">
+    {% for file in files %}
+      <div class="file-card">
+        <p>{{ file.file }}</p>
+
+        <div class="actions">
+          <a href="https://docs.google.com/gview?url={{ file.file.url }}&embedded=true" target="_blank">View</a>
+          <a href="{{ file.file.url }}?fl_attachment" target="_blank">Download</a>
+          <a href="/delete/{{ file.id }}/">Delete</a>
+        </div>
+      </div>
+    {% empty %}
+      <p>No files uploaded.</p>
+    {% endfor %}
+  </div>
+
+</div>
+
+</body>
+</html>
