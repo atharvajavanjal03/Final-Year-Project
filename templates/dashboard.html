@@ -13,20 +13,15 @@
 <ul>
 {% for file in files %}
   <li>
-    <!-- File name -->
     {{ file.file }}
 
-    <!-- View -->
-    <a href="{{ file.file }}" target="_blank">View</a>
+    <!-- Correct RAW URL -->
+    <a href="{{ file.file.url }}" target="_blank">View</a>
 
-    <!-- Download (forced) -->
-    <a href="{{ file.file }}?fl_attachment" target="_blank">Download</a>
+    <a href="{{ file.file.url }}?fl_attachment" target="_blank">Download</a>
 
-    <!-- Delete -->
     <a href="/delete/{{ file.id }}/">Delete</a>
   </li>
-{% empty %}
-  <li>No files uploaded yet.</li>
 {% endfor %}
 </ul>
 
