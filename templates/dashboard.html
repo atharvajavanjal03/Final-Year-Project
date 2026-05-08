@@ -11,17 +11,14 @@
   <li>
     {{ file.file.name }}
 
-    {% if ".jpg" in file.file.url or ".png" in file.file.url %}
-        <img src="{{ file.file.url }}" width="200">
+    <a href="{{ file.file.url }}" target="_blank">View</a>
 
-    {% elif ".pdf" in file.file.url %}
-        <iframe src="{{ file.file.url }}" width="400" height="300"></iframe>
-
-    {% else %}
-        <a href="{{ file.file.url }}" target="_blank">Open File</a>
-    {% endif %}
+    <a href="{{ file.file.url }}" download>Download</a>
 
     <a href="/delete/{{ file.id }}/">Delete</a>
+
+    <a href="{{ file.file.url }}?fl_attachment">Download</a>
+    
   </li>
 {% endfor %}
 </ul>
