@@ -76,9 +76,9 @@ LOGOUT_REDIRECT_URL = '/login/'
 import os
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+    'CLOUD_NAME': os.environ.get('dkaf0elaq'),
+    'API_KEY': os.environ.get('269742388844269'),
+    'API_SECRET': os.environ.get('fj_FuZLe1J_kbegGAAL17DqjdNk'),
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
