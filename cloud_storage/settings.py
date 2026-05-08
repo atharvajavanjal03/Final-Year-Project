@@ -77,13 +77,19 @@ TEMPLATES = [
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/login/'
 
+INSTALLED_APPS = [
+    ...
+    'cloudinary',
+    'cloudinary_storage',
+]
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dkaf0elaq',
     'API_KEY': '269742388844269',
     'API_SECRET': 'fj_FuZLe1J_kbegGAAL17DqjdNk',
 }
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 WSGI_APPLICATION = 'cloud_storage.wsgi.application'
 
